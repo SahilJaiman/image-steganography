@@ -120,7 +120,6 @@ const App = () => {
 
   return (
     <div >
-      <button class="enableEthereumButton">Enable Ethereum</button>
       <Title className='title' style={{ textAlign: "center" }}>Image Steganography</Title>
       <div className='App'>
 
