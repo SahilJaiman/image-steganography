@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/image-steganography/static/css/main.b1c88205.css",
+    "main.js": "/image-steganography/static/js/main.003399dc.js",
+    "index.html": "/image-steganography/index.html",
+    "main.b1c88205.css.map": "/image-steganography/static/css/main.b1c88205.css.map",
+    "main.003399dc.js.map": "/image-steganography/static/js/main.003399dc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b1c88205.css",
+    "static/js/main.003399dc.js"
+  ]
+}
