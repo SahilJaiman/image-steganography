@@ -1,13 +1,8 @@
-/*
- * steganography.js v1.0.3 2017-09-22
- *
- * Copyright (C) 2012 Peter Eigenschink (http://www.peter-eigenschink.at/)
- * Dual-licensed under MIT and Beerware license.
-*/
+
 /* eslint no-undef: "off"*/
 ;(function (name, context, factory) {
 
-  // Supports UMD. AMD, CommonJS/Node.js and browser context
+ 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = factory();
   } else if (typeof define === "function" && define.amd) {
@@ -131,11 +126,6 @@ Cover.prototype.encode = function(message, image, options) {
   var imageData = shadowCtx.getImageData(0, 0, shadowCanvas.width, shadowCanvas.height),
     data = imageData.data;
 
-  // bundlesPerChar ... Count of full t-bit-sized bundles per Character
-  // overlapping ... Count of bits of the currently handled character which are not handled during each run
-  // dec ... UTF-16 Unicode of the i-th character of the message
-  // curOverlapping ... The count of the bits of the previous character not handled in the previous run
-  // mask ... The raw initial bitmask, will be changed every run and if bits are overlapping
   var bundlesPerChar = codeUnitSize/t >> 0,
     overlapping = codeUnitSize%t,
     modMessage = [],
@@ -147,10 +137,9 @@ Cover.prototype.encode = function(message, image, options) {
     dec = message.charCodeAt(i) || 0;
     curOverlapping = (overlapping*i)%t;
     if(curOverlapping > 0 && oldDec) {
-      // Mask for the new character, shifted with the count of overlapping bits
+      
       mask = Math.pow(2,t-curOverlapping) - 1;
-      // Mask for the old character, i.e. the t-curOverlapping bits on the right
-      // of that character
+
       oldMask = Math.pow(2, codeUnitSize) * (1 - Math.pow(2, -curOverlapping));
       left = (dec & mask) << curOverlapping;
       right = (oldDec & oldMask) >> (codeUnitSize - curOverlapping);
@@ -259,53 +248,9 @@ Cover.prototype.decode = function(image, options) {
       if(!done) modMessage.push(data[i]-(255-prime+1));
     }
   } else {
-    /*for(k = 0, done=false; !done; k+=1) {
-      q = [];
-      for(i=(k*threshold*4)+3; i<(k+1)*threshold*4 && i<data.length && !done; i+=4) {
-        done = messageCompleted(data,i,threshold);
-        if(!done) q.push(data[i]-(255-prime+1)); // at Array index (i-((k*threshold*4)+3))/4
-      }
-      if(q.length === 0) continue;
-      // Calculate the coefficients which are the same for any order of the variable, but different for each argument
-      // i.e. for args[0] coeff=q[0]*(args[1]-args[2])*(args[1]-args[3])*...(args[1]-args[threshold-1])*...*(args[threshold-1]-args[1])*...*(args[threshold-1]-args[threshold-2])
-      var variableCoefficients = (function(i) {
-        if(i >= q.length) return [];
-        return [q[i]*
-        util.product(function(j) {
-        if(j !== i) {
-          return util.product(function(l) {
-          if(l !== j) return (args(j) - args(l));
-          }, q.length);
-        }
-        }, q.length)].concat(arguments.callee(i+1));
-      }(0));
-      // Calculate the coefficients which are different for each order of the variable and for each argument
-      // i.e. for order=0 and args[0] coeff=args[1]*args[2]*...*args[threshold-1]
-      var orderVariableCoefficients = function(order, varIndex) {
-        var workingArgs = util.createArrayFromArgs(args,varIndex,q.length), maxRec = q.length - (order+1);
-        return (function(startIndex, endIndex, recDepth) {
-        var recall = arguments.callee;
-        return util.sum(function(i) {
-          if(recDepth < maxRec)
-          return workingArgs[i]*recall(i+1,startIndex+order+2,recDepth+1);
-        }, endIndex, {"start": startIndex, "defValue": 1});
-        }(0,order+1,0));
-      };
-      // Calculate the common denominator of the whole term
-      var commonDenominator = util.product(function(i) {
-        return util.product(function(j) {
-        if(j !== i) return (args(i) - args(j));
-        }, q.length);
-      }, q.length);
-
-      for(i = 0; i < q.length; i+=1) {
-        modMessage.push((((Math.pow(-1,q.length-(i+1))*util.sum(function(j) {
-        return orderVariableCoefficients(i,j)*
-        variableCoefficients[j];
-        }, q.length))%prime)+prime)%prime); // ?divide by commonDenominator?
-      }
-    }
-  */}
+   
+     
+  }
 
   var message = "", charCode = 0, bitCount = 0, mask = Math.pow(2, codeUnitSize)-1;
   for(i = 0; i < modMessage.length; i+=1) {

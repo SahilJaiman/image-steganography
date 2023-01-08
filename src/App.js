@@ -19,7 +19,6 @@ const dummyRequest = ({ file, onSuccess }) => {
 };
 
 
-
 const App = () => {
   const [fileList, setFileList] = useState([]);
   const [imgUrl, setImgUrl] = useState(undefined);
@@ -34,10 +33,9 @@ const App = () => {
     setMessage(event.target.value);
   };
 
-  const onEncode = (e) => {
-    e.preventDefault();
-    console.log('Encode');
-
+  const onEncode = async (e) => {
+    
+   
     setEncoding(true);
     let src = null;
     try {
@@ -118,8 +116,11 @@ const App = () => {
     imgWindow?.document.write(image.outerHTML);
   };
 
+
+
   return (
     <div >
+      <button class="enableEthereumButton">Enable Ethereum</button>
       <Title className='title' style={{ textAlign: "center" }}>Image Steganography</Title>
       <div className='App'>
 
