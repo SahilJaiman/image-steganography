@@ -1,5 +1,5 @@
 # Image Steganography
-Hide a secret message in an image.
+Hide a secret message in an image using steganography.
 
 ## Technologies
 - React.js
